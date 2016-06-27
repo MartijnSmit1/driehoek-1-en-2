@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Right Angled Triangle</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <canvas id="canvas" width="400" height="400"></canvas>
+	<h4>Martijn Smit MD1B</h4>
+    
+    <script src="utils.js"></script>
+    <script src="triangle.js"></script>
+    <script>
+    window.onload = function () {
+		  var canvas = document.getElementById('canvas');
+          context = canvas.getContext('2d');
+
+
+        var posX = 0;
+        var posY = 0;
+
+        var head = 0;
+
+		  triangle1 = new Triangle(); // new instance
+          triangle1.colorFill = "#FF0000";
+
+        function Spin() {
+            switch(head){
+                case 0:
+                    if(posX <= canvas.width){
+                        posX += 3;
+                        triangle1.colorFill = "#FF0000";
+                        triangle1.colorLine = "#FF0000";
+                    } else {
+                        head += 1;
+                    }
+                    break;
+                case 1:
+                    if(posY <= canvas.height){
+                        posY += 3;
+                        triangle1.colorFill = "#00FF00";
+                        triangle1.colorLine = "#00FF00";
+                    } else {
+                        head += 1;
+                    }
+                    break;
+                case 2:
+                    if(posX >= 0){
+                        posX -= 3;
+                        triangle1.colorFill = "#0000FF";
+                        triangle1.colorLine = "#0000FF";
+                    } else {
+                        head += 1;
+                    }
+                    break;
+                case 3:
+                    if(posY >= 0){
+                        posY -= 3;
+                        triangle1.colorFill = "#FE2EC8";
+                        triangle1.colorLine = "#FE2EC8";
+                    } else {
+                        head = 0;
+                    }
+                    break;
+            }}
+        setInterval(Spin, 5);
+	
+		  (function drawFrame () {
+			 window.requestAnimationFrame(drawFrame, canvas);
+			 context.clearRect(0, 0, canvas.width, canvas.height);
+			 triangle1.xLeft = canvas.width / 2; // fixed point triangle
+			 triangle1.yLeft = canvas.height / 2; // fixed point triangle
+			 triangle1.x = posX;
+			 triangle1.y = posY;
+			 triangle1.draw(context);
+
+		  }());
+    };
+	</script>
+	
+  </body>
+</html>
